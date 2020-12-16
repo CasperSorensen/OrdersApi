@@ -84,7 +84,8 @@ pipeline {
               branch 'staging'
             }
             steps{
-              sh './deployment/scripts/testing-deployment.sh'
+              // sh './deployment/scripts/testing-deployment.sh'
+              sh 'ansible -m ping all'
               // ansiblePlaybook(credentialsId: "${KEY}", playbook: 'pull_webshop_front_end_testing.yml',inventory: "${HOSTS}")
             }
         }
