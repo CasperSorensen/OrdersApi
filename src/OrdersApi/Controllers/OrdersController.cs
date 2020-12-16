@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using OrdersApi.Models;
 using OrdersApi.Data;
-
 using Newtonsoft.Json;
-
 
 namespace OrdersApi.Controllers
 {
@@ -17,16 +16,38 @@ namespace OrdersApi.Controllers
   {
     private readonly IOrdersRepository _ordersrepo;
 
+    private readonly ILogger<OrdersController> _logger;
+
+    // ILogger<OrdersController> logger
     public OrdersController(IOrdersRepository repo)
     {
       this._ordersrepo = repo;
+      //_logger = logger;
     }
 
     // GET /User
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Order>>> Get()
     {
-      return new ObjectResult(await this._ordersrepo.GetAllOrders());
+      //_logger.LogInformation("Logging: Hello from OrdersController: Getting all Orders");
+      IEnumerable<Order> res = null;
+      try
+      {
+        res = await this._ordersrepo.GetAllOrders();
+        foreach (var item in res)
+        {
+          System.Console.WriteLine(item.customer_name);
+        }
+        if (res == null)
+        {
+          throw new Exception();
+        }
+      }
+      catch (System.Exception)
+      {
+        throw;
+      }
+      return new ObjectResult(res);
     }
 
     // GET /User/1
