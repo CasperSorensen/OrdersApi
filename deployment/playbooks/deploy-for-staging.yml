@@ -1,5 +1,5 @@
 - hosts:
-    - staging
+    - awsswarmmanager
   tasks:
     - name: Cloning Staging deployment code
       shell: git pull
