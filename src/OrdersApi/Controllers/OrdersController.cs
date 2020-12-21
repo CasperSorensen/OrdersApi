@@ -29,7 +29,7 @@ namespace OrdersApi.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Order>>> Get()
     {
-      //_logger.LogInformation("Logging: Hello from OrdersController: Getting all Orders");
+      _logger.LogInformation("Logging: OrdersController: Getting all Orders");
       IEnumerable<Order> res = null;
       try
       {
