@@ -84,9 +84,7 @@ pipeline {
               branch 'staging'
             }
             steps{
-              // sh './deployment/scripts/testing-deployment.sh'
-              // sh 'ansible -m ping all -vvv'
-              ansiblePlaybook(credentialsId: 'swarm-manager', playbook: 'deployment/playbooks/deploy-for-staging.yml',inventory: "${HOSTS}")
+              ansiblePlaybook(credentialsId: 'root', playbook: './playbooks/deploy-for-staging.yml',inventory: "${HOSTS}")
             }
         }
          stage('Deploy to Production environment') {
@@ -94,7 +92,7 @@ pipeline {
               branch 'main'
             }
             steps{
-              sh "ansible -m ping all"
+              ansiblePlaybook(credentialsId: 'root', playbook: './playbooks/deploy-for-production.yml',inventory: "${HOSTS}")
             }
         }
     }
