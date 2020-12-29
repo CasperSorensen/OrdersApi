@@ -24,17 +24,17 @@ namespace OrdersApi.Unittests
       this._context = new OrdersContext(config.MongoDb);
     }
 
-    [Fact, Trait("Priority", "1"), Trait("Category", "IntegrationTests")]
-    public async Task GetAllOrdersTest_NotNullOrEmptyList()
-    {
-      OrdersRepository or = new OrdersRepository(_context);
-      var result = await or.GetAllOrders();
-      foreach (var item in result)
-      {
-        System.Console.WriteLine(item.customer_name);
-      }
-      Assert.NotEmpty(result);
-      Assert.NotNull(result);
-    }
+    // [Fact, Trait("Priority", "1"), Trait("Category", "IntegrationTests")]
+    // public async Task GetAllOrdersTest_NotNullOrEmptyList()
+    // {
+    //   OrdersRepository or = new OrdersRepository(_context);
+    //   var result = await or.GetAllOrders();
+    //   foreach (var item in result)
+    //   {
+    //     System.Console.WriteLine(item.customer_name);
+    //   }
+    //   Assert.NotEmpty(result);
+    //   Assert.NotNull(result);
+    // }
   }
 }
