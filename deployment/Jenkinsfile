@@ -39,7 +39,7 @@ pipeline {
               script {
                 docker.image("knoxie2/orders_api_testing:latest").inside("""--entrypoint=''""") {
                   sh 'dotnet --version'
-                  sh 'cd src/FrontEndApp.Unittests'
+                  sh 'cd src/OrdersApi.Unittests'
                   sh 'dotnet test --logger "trx;LogFileName=unit_tests.xml"'
                 }
               }
