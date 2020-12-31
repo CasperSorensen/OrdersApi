@@ -90,7 +90,8 @@ pipeline {
               ansiblePlaybook(credentialsId: 'swarm-manager', playbook: './deployment/playbooks/deploy-for-staging.yml',inventory: "${HOSTS}")
             }
         }
-         stage('Deploy to Production environment') {
+      
+        stage('Deploy to Production environment') {
           when {
               branch 'main'
             }
@@ -98,11 +99,13 @@ pipeline {
               ansiblePlaybook(credentialsId: 'swarm-manager', playbook: './deployment/playbooks/deploy-for-production.yml',inventory: "${HOSTS}")
             }
         }
+      
         stage('CleanWorkspace') {
             steps {
                 cleanWs()
             }
         }
+      
     }
     //  post { 
     //     always { 
