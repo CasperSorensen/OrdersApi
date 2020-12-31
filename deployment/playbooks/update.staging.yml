@@ -1,7 +1,5 @@
-- name: Cloning production deployment code
-  shell: git pull https://github.com/CasperSorensen/webshop_deployments
-  args:
-    chdir: Deployments/
-
-- name: Deploying to Production
-  shell: docker stack deploy --compose-file /front_end/docker-compose.yml staging_stack
+- hosts:
+    - awsswarmmanager
+  tasks:
+    - name: Update the front_end service
+      shell: docker service update --force staging_stack_orders_service_testing
