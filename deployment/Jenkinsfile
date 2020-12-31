@@ -9,7 +9,7 @@ pipeline {
     } 
     agent any
     stages {
-        stage('Building image for Testting') {
+        stage('Development: Building Development image for Unit Tests') {
           when {
               branch 'development'
             }
@@ -20,18 +20,7 @@ pipeline {
             }
         }
         
-        stage('Building image for Production') {
-          when {
-              branch 'staging'
-            }
-            steps {
-              script {
-                dockerImage = docker.build productionregistry + ":latest"
-              }
-            }
-        }
-        
-        stage('Running Unit Tests') {
+        stage('Development: Running Unit Tests') {
           when {
               branch 'development'
             }
@@ -45,11 +34,25 @@ pipeline {
               }
             }
         }
-
-        stage('Push Image to Ducker Hub') {
+        
+        stage('Staging: Building image for Staging') {
+          when {
+              branch 'staging'
+            }
+            steps {
+              script {
+                 dockerImage = docker.build productionregistry + ":latest" 
+              }
+            }
+        }
+        
+        stage('Push image to Ducker Hub') {
            when {
               not {
                 branch 'main'
+              }
+               not {
+                branch 'development'
               }
             }
             steps{    
@@ -61,7 +64,7 @@ pipeline {
             }
         }
 
-        stage('Remove Unused Testing docker image') {
+        stage('Development: Remove Unused Development docker image') {
            when {
               branch 'development'
             }
@@ -84,24 +87,25 @@ pipeline {
               branch 'staging'
             }
             steps{
-              ansiblePlaybook(credentialsId: 'root', playbook: 'playbooks/deploy-for-staging.yml',inventory: "${HOSTS}")
+              ansiblePlaybook(credentialsId: 'swarm-manager', playbook: './deployment/playbooks/deploy-for-staging.yml',inventory: "${HOSTS}")
             }
         }
-
+      
         stage('Deploy to Production environment') {
           when {
               branch 'main'
             }
             steps{
-              ansiblePlaybook(credentialsId: 'root', playbook: 'playbooks/deploy-for-production.yml',inventory: "${HOSTS}")
+              ansiblePlaybook(credentialsId: 'swarm-manager', playbook: './deployment/playbooks/deploy-for-production.yml',inventory: "${HOSTS}")
             }
         }
-
+      
         stage('CleanWorkspace') {
             steps {
                 cleanWs()
             }
         }
+      
     }
     //  post { 
     //     always { 
