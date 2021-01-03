@@ -1,4 +1,0 @@
-- hosts:
-    - awsswarmmanager
-  tasks:
-    - action: ping
