@@ -19,17 +19,17 @@ namespace OrdersApi.Controllers
     private readonly ILogger<OrdersController> _logger;
 
     // ILogger<OrdersController> logger
-    public OrdersController(IOrdersRepository repo)
+    public OrdersController(IOrdersRepository repo, ILogger<OrdersController> logger)
     {
       this._ordersrepo = repo;
-      //_logger = logger;
+      _logger = logger;
     }
 
     // GET /User
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Order>>> Get()
     {
-      // _logger.LogInformation("Logging: OrdersController: Getting all Orders");
+      _logger.LogInformation("Logging: OrdersController: Getting all Orders");
       IEnumerable<Order> res = null;
       try
       {
