@@ -1,5 +1,0 @@
-- hosts:
-    - awsswarmmanager
-  tasks:
-    - name: Update the front_end service
-      shell: docker service update --force production_stack_orders_service
