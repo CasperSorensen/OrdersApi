@@ -4,37 +4,31 @@ using Xunit;
 using OrdersApi.Data;
 using OrdersApi.Contexts;
 using OrdersApi.Configs;
+using OrdersApi.Models;
 
 namespace OrdersApi.Unittests
 {
   public class OrdersTests
   {
-    private readonly IOrdersContext _context;
+    private Order _testOrder;
 
     public OrdersTests()
     {
-      var config = new ServerConfig();
 
-      config.MongoDb.Database = "orders_Db";
-      config.MongoDb.Host = "localhost";
-      config.MongoDb.User = "root";
-      config.MongoDb.Password = "example";
-      config.MongoDb.Port = 27017;
-
-      this._context = new OrdersContext(config.MongoDb);
     }
 
-    // [Fact, Trait("Priority", "1"), Trait("Category", "IntegrationTests")]
-    // public async Task GetAllOrdersTest_NotNullOrEmptyList()
-    // {
-    //   OrdersRepository or = new OrdersRepository(_context);
-    //   var result = await or.GetAllOrders();
-    //   foreach (var item in result)
-    //   {
-    //     System.Console.WriteLine(item.customer_name);
-    //   }
-    //   Assert.NotEmpty(result);
-    //   Assert.NotNull(result);
-    // }
+    [Fact, Trait("Priority", "1"), Trait("Category", "UnitTests")]
+    public void CreateDummyOrder_NotNull()
+    {
+      var testorder = this._testOrder.CreateDummyOrder();
+      Assert.NotNull(testorder);
+    }
+
+    [Fact, Trait("Priority", "1"), Trait("Category", "UnitTests")]
+    public void CreateDummyOrder_ProductQuantityZero()
+    {
+      var testorder = this._testOrder.CreateDummyOrder();
+      Assert.Equal(0, testorder.product_quantity);
+    }
   }
 }
