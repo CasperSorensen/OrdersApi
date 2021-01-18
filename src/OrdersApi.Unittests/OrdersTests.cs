@@ -14,7 +14,7 @@ namespace OrdersApi.Unittests
 
     public OrdersTests()
     {
-
+      this._testOrder = new Order();
     }
 
     [Fact, Trait("Priority", "1"), Trait("Category", "UnitTests")]
